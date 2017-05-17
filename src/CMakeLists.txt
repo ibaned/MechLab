@@ -1,0 +1,11 @@
+set(ML_SOURCES
+ml_solver.cpp
+ml_static_solver.cpp
+main.cpp
+)
+
+add_executable(MechLab ${ML_SOURCES})
+target_link_libraries(MechLab Goal::Goal)
+bob_export_target(MechLab)
+
+bob_end_subdir()
