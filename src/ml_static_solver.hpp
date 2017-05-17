@@ -6,6 +6,15 @@
 #include <Teuchos_ParameterList.hpp>
 #include "ml_solver.hpp"
 
+/// @cond
+namespace goal {
+class Discretization;
+class Physics;
+class SolInfo;
+class Output;
+}
+/// @endcond
+
 namespace ml {
 
 using Teuchos::ParameterList;
@@ -27,7 +36,16 @@ class StaticSolver : public Solver {
 
   private:
 
+    void solve_primal();
+    void solve_dual();
+    void estimate_error();
+    void adapt_mesh();
+
     ParameterList params;
+    goal::Discretization* disc;
+    goal::Physics* physics;
+    goal::SolInfo* info;
+    goal::Output* output;
 };
 
 } // end namespace ml
