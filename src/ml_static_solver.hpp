@@ -9,7 +9,6 @@
 /// @cond
 namespace goal {
 class Discretization;
-class Physics;
 class SolInfo;
 class Output;
 }
@@ -18,6 +17,10 @@ class Output;
 namespace ml {
 
 using Teuchos::ParameterList;
+
+/// @cond
+class Mechanics;
+/// @endcond
 
 /// @brief An interface to solve static problems.
 class StaticSolver : public Solver {
@@ -43,7 +46,7 @@ class StaticSolver : public Solver {
 
     ParameterList params;
     goal::Discretization* disc;
-    goal::Physics* physics;
+    ml::Mechanics* mech;
     goal::SolInfo* info;
     goal::Output* output;
 };
