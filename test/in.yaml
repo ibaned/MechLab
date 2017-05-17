@@ -1,2 +1,8 @@
 debug example:
   solver type: static
+  discretization:
+    geom file: box2D.dmg
+    mesh file: box2D_1p.smb
+    assoc file: box2D.txt
+    reorder mesh: true
+    workset size: 1000

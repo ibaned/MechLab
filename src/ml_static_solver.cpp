@@ -6,6 +6,7 @@ namespace ml {
 
 static ParameterList get_valid_params() {
   ParameterList p;
+  p.set<std::string>("solver type", "");
   p.sublist("discretization");
   return p;
 }
