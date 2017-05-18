@@ -1,5 +1,7 @@
 set(ML_SOURCES
 ml_mechanics.cpp
+ml_volumetric.cpp
+ml_neumann.cpp
 ml_solver.cpp
 ml_static_solver.cpp
 main.cpp
