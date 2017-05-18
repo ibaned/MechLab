@@ -39,6 +39,10 @@ class Mechanics : public goal::Physics {
     using FieldManager = goal::FieldManager;
     /// @brief FieldManagers type.
     using FieldManagers = goal::FieldManagers;
+    /// @brief Residual evaluation type.
+    using Residual = goal::Traits::Residual;
+    /// @brief Jacobian evaluation type.
+    using Jacobian = goal::Traits::Jacobian;
 
   protected:
 
@@ -63,6 +67,10 @@ class Mechanics : public goal::Physics {
 
     ParameterList params;
     goal::States* states;
+
+    bool is_primal;
+    bool is_dual;
+    bool is_error;
 };
 
 /// @brief Create a mechanics physics object.
