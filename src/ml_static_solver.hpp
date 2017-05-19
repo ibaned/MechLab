@@ -48,7 +48,7 @@ class StaticSolver : public Solver {
     goal::Discretization* disc;
     ml::Mechanics* mech;
     goal::SolInfo* info;
-    goal::Output* output;
+    goal::Output* out;
 };
 
 } // end namespace ml
