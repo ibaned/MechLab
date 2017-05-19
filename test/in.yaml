@@ -6,3 +6,11 @@ debug example:
     assoc file: box2D.txt
     reorder mesh: true
     workset size: 1000
+  physics:
+    p order: 1
+    q degree: 1
+    model: elastic
+    box: {}
+    dirichlet bcs: {}
+  output:
+    out file: out
