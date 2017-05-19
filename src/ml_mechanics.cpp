@@ -93,7 +93,7 @@ void Mechanics::build_fields() {
 }
 
 void Mechanics::build_states() {
-  goal::create_states(disc, q_degree);
+  states = goal::create_states(disc, q_degree);
   if (model == "elastic") {
     states->add("cauchy", 2);
   } else if (model == "J2") {

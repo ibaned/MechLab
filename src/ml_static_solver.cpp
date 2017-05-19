@@ -34,6 +34,8 @@ StaticSolver::StaticSolver(ParameterList const& p)
 }
 
 StaticSolver::~StaticSolver() {
+  ml::destroy_mech(mech);
+  goal::destroy_disc(disc);
 }
 
 void StaticSolver::solve() {

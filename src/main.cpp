@@ -14,6 +14,7 @@ int main(int argc, char** argv) {
     Teuchos::updateParametersFromYamlFile(in, pp);
     auto solver = ml::create_solver(p);
     solver->solve();
+    ml::destroy_solver(solver);
   } catch (std::exception const& ex) {
     goal::print("caught exception:");
     goal::print("%s", ex.what());
