@@ -1,0 +1,61 @@
+#ifndef ml_elastic_hpp
+#define ml_elastic_hpp
+
+#include <Phalanx_Evaluator_Macros.hpp>
+#include <Teuchos_ParameterList.hpp>
+#include <goal_dimension.hpp>
+
+/// @cond
+namespace Teuchos {
+class ParameterList;
+}
+
+namespace goal {
+class Field;
+class States;
+}
+/// @end cond
+
+namespace ml {
+
+using Teuchos::ParameterList;
+
+PHX_EVALUATOR_CLASS(Elastic)
+
+  public:
+
+    /// @brief Construct the elastic stress evaluator.
+    /// @param u The displacement fields.
+    /// @param s The state fields structure.
+    /// @param p A parameter list of material properties.
+    /// @param t The entity type to operate over
+    Elastic(
+        std::vector<goal::Field*> const& u,
+        goal::States* s,
+        ParameterList const& mp,
+        int type);
+
+  private:
+
+    using Ent = goal::Ent;
+    using IP = goal::IP;
+    using Dim = goal::Dim;
+
+    int num_ips;
+    int num_dims;
+    
+    double E;
+    double nu;
+    goal::States* states;
+
+    // input
+    std::vector<PHX::MDField<const ScalarT, Ent, IP, Dim> > grad_u;
+
+    // output
+    PHX::MDField<ScalarT, Ent, IP, Dim, Dim> cauchy;
+
+PHX_EVALUATOR_CLASS_END
+
+} // end namespace ml
+
+#endif

@@ -4,6 +4,7 @@ ml_volumetric.cpp
 ml_neumann.cpp
 ml_solver.cpp
 ml_static_solver.cpp
+ml_ev_elastic.cpp
 main.cpp
 )
 
