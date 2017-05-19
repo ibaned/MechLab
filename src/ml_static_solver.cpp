@@ -1,6 +1,8 @@
+#include <goal_assembly.hpp>
 #include <goal_control.hpp>
 #include <goal_discretization.hpp>
 #include <goal_output.hpp>
+#include <goal_sol_info.hpp>
 
 #include "ml_mechanics.hpp"
 #include "ml_static_solver.hpp"
@@ -44,8 +46,21 @@ StaticSolver::~StaticSolver() {
   goal::destroy_disc(disc);
 }
 
+void StaticSolver::solve_primal() {
+  goal::print("*** primal problem");
+  mech->build_coarse_indexer();
+  mech->build_primal_model();
+  auto indexer = mech->get_indexer();
+  info = goal::create_sol_info(indexer, 0);
+  goal::compute_primal_jacobian(mech, info, disc, 0, 0);
+  goal::destroy_sol_info(info);
+  mech->destroy_model();
+  mech->destroy_indexer();
+}
+
 void StaticSolver::solve() {
   goal::print("solving");
+  solve_primal();
 }
 
 } // end namespace ml
