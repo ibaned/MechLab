@@ -7,6 +7,7 @@ ml_static_solver.cpp
 ml_ev_kinematics.cpp
 ml_ev_elastic.cpp
 ml_ev_first_pk.cpp
+ml_ev_momentum_resid.cpp
 main.cpp
 )
 
