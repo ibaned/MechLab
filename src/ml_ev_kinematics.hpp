@@ -1,6 +1,8 @@
 #ifndef ml_ev_kinematics_hpp
 #define ml_ev_kinematics_hpp
 
+/// @file ml_ev_kinematics.hpp
+
 #include <Phalanx_Evaluator_Macros.hpp>
 #include <goal_dimension.hpp>
 

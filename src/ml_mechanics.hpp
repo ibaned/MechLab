@@ -1,7 +1,7 @@
-#ifndef ml_physics_hpp
-#define ml_physics_hpp
+#ifndef ml_mechanics_hpp
+#define ml_mechanics_hpp
 
-/// @file ml_physics.hpp
+/// @file ml_mechanics.hpp
 
 #include <goal_physics.hpp>
 #include <Teuchos_ParameterList.hpp>
