@@ -26,7 +26,7 @@ static void validate_params(
   GOAL_ALWAYS_ASSERT(p.isSublist("dirichlet bcs"));
   for (int i = 0; i < d->get_num_elem_sets(); ++i)
     GOAL_ALWAYS_ASSERT(p.isSublist(d->get_elem_set_name(i)));
-  p.validateParameters(get_valid_params(d));
+  p.validateParameters(get_valid_params(d), 0);
 }
 
 Mechanics::Mechanics(ParameterList const& p, goal::Discretization* d)
@@ -93,9 +93,11 @@ void Mechanics::build_fields() {
 }
 
 void Mechanics::build_states() {
+  small_strain = false;
   states = goal::create_states(disc, q_degree);
   if (model == "elastic") {
     states->add("cauchy", 2);
+    small_strain = true;
   } else if (model == "J2") {
     states->add("eqps", 0, true);
     states->add("Fp", 2, true, true);

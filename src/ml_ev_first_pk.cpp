@@ -30,7 +30,7 @@ FirstPK<EVALT, TRAITS>::FirstPK(
     auto n = p->name();
     auto dl = p->ip_dl(type);
     pressure = PHX::MDField<const ScalarT, Ent, IP>(n, dl);
-    this->addDependentField(n, dl);
+    this->addDependentField(pressure);
   }
 
   this->addDependentField(def_grad);
@@ -108,5 +108,7 @@ PHX_EVALUATE_FIELDS(FirstPK, workset) {
 
 }
 
+template class FirstPK<goal::Traits::Residual, goal::Traits>;
+template class FirstPK<goal::Traits::Jacobian, goal::Traits>;
 
 } // end namespace ml

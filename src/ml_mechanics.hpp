@@ -80,6 +80,7 @@ class Mechanics : public goal::Physics {
 
     int p_order;
     int q_degree;
+    bool small_strain;
 
     std::string model;
     goal::States* states;
