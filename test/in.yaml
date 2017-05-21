@@ -10,7 +10,9 @@ debug example:
     p order: 1
     q degree: 1
     model: elastic
-    box: {}
+    box:
+      E: 1000.0
+      nu: 0.25
     dirichlet bcs: {}
   output:
     out file: out
