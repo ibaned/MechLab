@@ -57,8 +57,8 @@ PHX_EVALUATE_FIELDS(FirstPK, workset) {
   // populate the first PK tensor with the Cauchy stress.
   for (int elem = 0; elem < workset.size; ++elem)
   for (int ip = 0; ip < num_ips; ++ip)
-  for (int i = 0; i < num_ips; ++i)
-  for (int j = 0; j < num_ips; ++j)
+  for (int i = 0; i < num_dims; ++i)
+  for (int j = 0; j < num_dims; ++j)
     first_pk(elem, ip, i, j) = cauchy(elem, ip, i, j);
 
   // substitute pressure if mixed formulation
