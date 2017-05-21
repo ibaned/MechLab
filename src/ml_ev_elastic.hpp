@@ -2,7 +2,6 @@
 #define ml_elastic_hpp
 
 #include <Phalanx_Evaluator_Macros.hpp>
-#include <Teuchos_ParameterList.hpp>
 #include <goal_dimension.hpp>
 
 /// @cond
@@ -27,8 +26,8 @@ PHX_EVALUATOR_CLASS(Elastic)
     /// @brief Construct the elastic stress evaluator.
     /// @param u The displacement fields.
     /// @param s The state fields structure.
-    /// @param p A parameter list of material properties.
-    /// @param t The entity type to operate over
+    /// @param mp A parameter list of material properties.
+    /// @param type The entity type to operate on.
     Elastic(
         std::vector<goal::Field*> const& u,
         goal::States* s,
