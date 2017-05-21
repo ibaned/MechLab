@@ -4,6 +4,7 @@
 #include <goal_ev_interpolate.hpp>
 
 #include "ml_mechanics.hpp"
+#include "ml_ev_kinematics.hpp"
 
 using Teuchos::rcp;
 using goal::Traits;
@@ -28,12 +29,17 @@ void ml::Mechanics::register_volumetric(goal::FieldManager fm) {
 
   { // interpolate the fields to integration points
     auto ev = rcp(new goal::Interpolate<EvalT, Traits>(u, type));
+    fm->registerEvaluator<EvalT>(ev); }
+
+  { // compute kinematic quantities
+    auto ev = rcp(new ml::Kinematics<EvalT, Traits>(u, type));
     fm->registerEvaluator<EvalT>(ev);
     fm->requireField<EvalT>(*ev->evaluatedFields()[0]); }
 
   // set the FAD data and finalize the PHX field maanger registration.
   goal::set_extended_data_type_dims(indexer, fm, type);
   fm->postRegistrationSetupForType<EvalT>(NULL);
+
 }
 
 template void ml::Mechanics::register_volumetric<goal::Traits::Residual>(goal::FieldManager fm);
