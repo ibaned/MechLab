@@ -5,7 +5,9 @@
 
 #include "ml_mechanics.hpp"
 #include "ml_ev_kinematics.hpp"
+#include "ml_ev_elastic.hpp"
 
+using Teuchos::RCP;
 using Teuchos::rcp;
 using goal::Traits;
 
@@ -33,6 +35,15 @@ void ml::Mechanics::register_volumetric(goal::FieldManager fm) {
 
   { // compute kinematic quantities
     auto ev = rcp(new ml::Kinematics<EvalT, Traits>(u, type));
+    fm->registerEvaluator<EvalT>(ev); }
+
+  auto es_name = disc->get_elem_set_name(elem_set);
+  auto mp = params.sublist(es_name);
+
+  { // compute the Cauchy stress tensor
+    RCP<PHX::Evaluator<Traits> > ev;
+    if (model == "elastic")
+      ev = rcp(new ml::Elastic<EvalT, Traits>(u, states, mp, type));
     fm->registerEvaluator<EvalT>(ev);
     fm->requireField<EvalT>(*ev->evaluatedFields()[0]); }
 

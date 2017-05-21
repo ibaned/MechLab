@@ -37,7 +37,7 @@ Elastic<EVALT, TRAITS>::Elastic(
   grad_u.resize(num_dims);
   for (int i = 0; i < num_dims; ++i) {
     auto n = u[i]->g_name();
-    auto dl = u[i]->g_dl(type);
+    auto dl = u[i]->g_ip_dl(type);
     grad_u[i] = PHX::MDField<const ScalarT, Ent, IP, Dim>(n, dl);
     this->addDependentField(grad_u[i]);
   }
@@ -64,7 +64,7 @@ PHX_EVALUATE_FIELDS(Elastic, workset) {
 
   for (int elem = 0; elem < workset.size; ++elem) {
     auto e = workset.entities[elem];
-    for (int ip = 0; ip < num_dims; ++ip) {
+    for (int ip = 0; ip < num_ips; ++ip) {
 
       for (int i = 0; i < num_dims; ++i)
       for (int j = 0; j < num_dims; ++j)

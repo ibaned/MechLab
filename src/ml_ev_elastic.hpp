@@ -1,5 +1,5 @@
-#ifndef ml_elastic_hpp
-#define ml_elastic_hpp
+#ifndef ml_ev_elastic_hpp
+#define ml_ev_elastic_hpp
 
 #include <Phalanx_Evaluator_Macros.hpp>
 #include <goal_dimension.hpp>
