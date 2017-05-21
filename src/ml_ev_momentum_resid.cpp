@@ -23,11 +23,11 @@ MomentumResid<EVALT, TRAITS>::MomentumResid(
   resid.resize(num_dims);
 
   for (int i = 0; i < num_dims; ++i) {
-    auto wn = u[i]->g_basis_name();
-    auto wdl = u[i]->w_dl(type);
+    auto gwn = u[i]->g_basis_name();
+    auto gwdl = u[i]->g_w_dl(type);
     auto rn = u[i]->resid_name();
     auto rdl = u[i]->dl(type);
-    grad_w[i] = PHX::MDField<const double, Ent, Node, IP, Dim>(wn, wdl);
+    grad_w[i] = PHX::MDField<const double, Ent, Node, IP, Dim>(gwn, gwdl);
     resid[i] = PHX::MDField<ScalarT, Ent, Node>(rn, rdl);
     this->addDependentField(grad_w[i]);
     this->addEvaluatedField(resid[i]);
@@ -53,7 +53,7 @@ PHX_EVALUATE_FIELDS(MomentumResid, workset) {
 
     for (int node = 0; node < num_nodes; ++node)
     for (int dim = 0; dim < num_dims; ++dim)
-      resid[dim](elem, node) = 0.0;
+      resid[dim](elem, node) = ScalarT(0.0);
 
     for (int ip = 0; ip < num_ips; ++ip)
     for (int node = 0; node < num_nodes; ++node)
