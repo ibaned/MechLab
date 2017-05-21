@@ -7,6 +7,7 @@
 #include "ml_ev_kinematics.hpp"
 #include "ml_ev_elastic.hpp"
 #include "ml_ev_first_pk.hpp"
+#include "ml_ev_momentum_resid.hpp"
 
 using Teuchos::RCP;
 using Teuchos::rcp;
@@ -52,6 +53,10 @@ void ml::Mechanics::register_volumetric(goal::FieldManager fm) {
 
   { // pull back the Cauchy stress tensor
     auto ev = rcp(new FirstPK<EvalT, Traits>(disp, press, small_strain, type));
+    fm->registerEvaluator<EvalT>(ev); }
+
+  { // compute the momentum residual
+    auto ev = rcp(new MomentumResid<EvalT, Traits>(disp, type));
     fm->registerEvaluator<EvalT>(ev);
     fm->requireField<EvalT>(*ev->evaluatedFields()[0]); }
 
