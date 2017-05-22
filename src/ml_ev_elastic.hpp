@@ -15,7 +15,7 @@ namespace goal {
 class Field;
 class States;
 }
-/// @end cond
+/// @endcond
 
 namespace ml {
 
