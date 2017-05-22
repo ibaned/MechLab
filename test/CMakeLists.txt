@@ -22,9 +22,13 @@ endfunction()
 
 include(meshgen.cmake)
 
-mpi_test(static_elast_p1_1p 1)
-mpi_test(static_elast_p1_4p 4)
-mpi_test(static_elast_p2_4p 4)
+mpi_test(static_elast_p1_2D_4p 4)
+mpi_test(static_elast_p2_2D_4p 4)
+mpi_test(static_elast_p3_2D_4p 4)
+
+mpi_test(static_elast_p1_3D_4p 4)
+mpi_test(static_elast_p2_3D_4p 4)
+mpi_test(static_elast_p3_3D_4p 4)
 
 add_custom_target(pretest COMMAND)
 add_dependencies(pretest meshgen)

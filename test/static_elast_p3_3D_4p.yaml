@@ -1,0 +1,28 @@
+debug example:
+  solver type: static
+  discretization:
+    geom file: box3D.dmg
+    mesh file: box3D_4p.smb
+    assoc file: box3D.txt
+    reorder mesh: true
+    workset size: 1000
+  mechanics:
+    p order: 3
+    q degree: 4
+    model: elastic
+    box:
+      E: 1000.0
+      nu: 0.25
+    dirichlet bcs:
+      bc 1: [ux, xmin, 0.0]
+      bc 2: [uy, ymin, 0.0]
+      bc 3: [uz, zmin, 0.0]
+      bc 4: [ux, xmax, 0.01]
+  linear algebra:
+    method: CG
+    maximum iterations: 200
+    krylov size: 200
+    tolerance: 1.0e-10
+  output:
+    out file: out_static_elast_p3_3D_4p
+    interpolate: [ux, uy, uz]

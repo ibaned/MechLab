@@ -1,9 +1,9 @@
 debug example:
   solver type: static
   discretization:
-    geom file: box2D.dmg
-    mesh file: box2D_4p.smb
-    assoc file: box2D.txt
+    geom file: box3D.dmg
+    mesh file: box3D_4p.smb
+    assoc file: box3D.txt
     reorder mesh: true
     workset size: 1000
     make quadratic: true
@@ -17,11 +17,12 @@ debug example:
     dirichlet bcs:
       bc 1: [ux, xmin, 0.0]
       bc 2: [uy, ymin, 0.0]
-      bc 3: [ux, xmax, 0.01]
+      bc 3: [uz, zmin, 0.0]
+      bc 4: [ux, xmax, 0.01]
   linear algebra:
     method: CG
     maximum iterations: 200
     krylov size: 200
     tolerance: 1.0e-10
   output:
-    out file: out_static_elast_p2_4p
+    out file: out_static_elast_p2_3D_4p
