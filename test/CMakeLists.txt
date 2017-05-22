@@ -4,6 +4,7 @@ endif()
 
 set(MPIEXE mpirun)
 set(MPIFLAGS -np)
+set(MLEXE ../src/MechLab)
 
 function(copy input)
   configure_file(
@@ -12,9 +13,18 @@ function(copy input)
     COPYONLY)
 endfunction()
 
+function(mpi_test testname np)
+  copy(${testname}.yaml)
+  add_test(
+    NAME ${testname}
+    COMMAND ${MPIEXE} ${MPIFLAGS} ${np} ${MLEXE} "${testname}.yaml")
+endfunction()
+
 include(meshgen.cmake)
 
-copy(in.yaml)
+mpi_test(static_elast_p1_1p 1)
+mpi_test(static_elast_p1_4p 4)
+mpi_test(static_elast_p2_4p 4)
 
 add_custom_target(pretest COMMAND)
 add_dependencies(pretest meshgen)

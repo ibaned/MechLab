@@ -6,13 +6,21 @@ debug example:
     assoc file: box2D.txt
     reorder mesh: true
     workset size: 1000
-  physics:
+  mechanics:
     p order: 1
     q degree: 1
     model: elastic
     box:
       E: 1000.0
       nu: 0.25
-    dirichlet bcs: {}
+    dirichlet bcs:
+      bc 1: [ux, xmin, 0.0]
+      bc 2: [uy, ymin, 0.0]
+      bc 3: [ux, xmax, 0.01]
+  linear algebra:
+    method: CG
+    maximum iterations: 200
+    krylov size: 200
+    tolerance: 1.0e-10
   output:
-    out file: out
+    out file: out_static_elast_p1_1p
