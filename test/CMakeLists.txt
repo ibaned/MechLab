@@ -18,3 +18,5 @@ copy(in.yaml)
 
 add_custom_target(pretest COMMAND)
 add_dependencies(pretest meshgen)
+
+bob_end_subdir()
