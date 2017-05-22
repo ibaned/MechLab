@@ -40,6 +40,9 @@ class StaticSolver : public Solver {
   private:
 
     void solve_primal();
+    void solve_linear_primal();
+    void solve_nonlinear_primal();
+
     void solve_dual();
     void estimate_error();
     void adapt_mesh();
@@ -49,6 +52,8 @@ class StaticSolver : public Solver {
     ml::Mechanics* mech;
     goal::SolInfo* info;
     goal::Output* out;
+
+    bool is_linear;
 };
 
 } // end namespace ml
