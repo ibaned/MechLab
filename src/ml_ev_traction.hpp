@@ -10,7 +10,7 @@
 namespace goal {
 class Indexer;
 class Discretization;
-class SolutionInfo;
+class SolInfo;
 }
 /// @endcond
 
@@ -34,17 +34,23 @@ PHX_EVALUATOR_CLASS_PP(Traction)
 
   private:
 
+    using Dummy = goal::Dummy;
     using Node = goal::Node;
     using Ent = goal::Ent;
-    using Dim = goal::Dim;
     using IP = goal::IP;
 
+    std::vector<goal::Field*> disp;
+    Teuchos::Array<std::string> bc;
     goal::Indexer* indexer;
-    goal::Discretization* disc;
-    goal::SolutionInfo* info;
+    goal::SolInfo* info;
+
+    int num_nodes;
+    int num_ips;
+    int num_dims;
 
     // input
-    std::vector<PHX::MDField<const ScalarT, Ent, Node, IP> > w;
+    PHX::MDField<const double, Ent, IP> wdv;
+    std::vector<PHX::MDField<const double, Ent, Node, IP> > w;
 
 PHX_EVALUATOR_CLASS_END
 
