@@ -23,7 +23,7 @@ void ml::Mechanics::register_volumetric(goal::FieldManager fm) {
   // get the current entity type to operate on
   auto type = disc->get_elem_type(elem_set);
 
-  // bail if there a no entities to operate on in this elem set
+  // bail if there are no entities to operate on in this elem set
   if (type < 0) {
     goal::set_extended_data_type_dims(indexer, fm, 0);
     fm->postRegistrationSetupForType<EvalT>(NULL);
@@ -36,29 +36,35 @@ void ml::Mechanics::register_volumetric(goal::FieldManager fm) {
 
   { // gather the displacement fields
     auto ev = rcp(new goal::Gather<EvalT, Traits>(indexer, u, type));
-    fm->registerEvaluator<EvalT>(ev); }
+    fm->registerEvaluator<EvalT>(ev);
+  }
 
   { // set the displacement field basis functions
     auto ev = rcp(new goal::Basis<EvalT, Traits>(disp[0], type));
-    fm->registerEvaluator<EvalT>(ev); }
+    fm->registerEvaluator<EvalT>(ev);
+  }
 
   { // interpolate the displacement fields to integration points
     auto ev = rcp(new goal::Interpolate<EvalT, Traits>(disp, type));
-    fm->registerEvaluator<EvalT>(ev); }
+    fm->registerEvaluator<EvalT>(ev);
+  }
 
   { // compute kinematic quantities
     auto ev = rcp(new ml::Kinematics<EvalT, Traits>(disp, type));
-    fm->registerEvaluator<EvalT>(ev); }
+    fm->registerEvaluator<EvalT>(ev);
+  }
 
   { // compute the Cauchy stress tensor
     RCP<PHX::Evaluator<Traits> > ev;
     if (model == "elastic")
       ev = rcp(new ml::Elastic<EvalT, Traits>(disp, states, mp, type));
-    fm->registerEvaluator<EvalT>(ev); }
+    fm->registerEvaluator<EvalT>(ev);
+  }
 
   { // pull back the Cauchy stress tensor
     auto ev = rcp(new FirstPK<EvalT, Traits>(disp, press, small_strain, type));
-    fm->registerEvaluator<EvalT>(ev); }
+    fm->registerEvaluator<EvalT>(ev);
+  }
 
   // compute the weighted momentum residual
   if (is_primal || is_dual) {
