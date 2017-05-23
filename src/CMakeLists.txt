@@ -8,6 +8,7 @@ ml_ev_kinematics.cpp
 ml_ev_elastic.cpp
 ml_ev_first_pk.cpp
 ml_ev_momentum_resid.cpp
+ml_ev_traction.cpp
 main.cpp
 )
 
