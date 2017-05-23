@@ -12,7 +12,7 @@ static ParameterList get_valid_params(goal::Discretization* d) {
   p.set<int>("q degree", 0);
   p.set<std::string>("model", "");
   p.sublist("dirichlet bcs");
-  p.sublist("neumann bcs");
+  p.sublist("traction bcs");
   for (int i = 0; i < d->get_num_elem_sets(); ++i)
     p.sublist(d->get_elem_set_name(i));
   return p;
@@ -42,6 +42,7 @@ Mechanics::Mechanics(ParameterList const& p, goal::Discretization* d)
   model = params.get<std::string>("model");
   build_fields();
   build_states();
+  build_tractions();
 }
 
 Mechanics::~Mechanics() {
@@ -104,6 +105,21 @@ void Mechanics::build_states() {
     states->add("cauchy", 2);
   } else
     goal::fail("unkown material model %s", model.c_str());
+}
+
+void Mechanics::build_tractions() {
+  using Teuchos::Array;
+  using Teuchos::getValue;
+  if (! params.isSublist("traction bcs")) return;
+  auto tbc = params.sublist("traction bcs");
+  for (auto it = tbc.begin(); it != tbc.end(); ++it) {
+    auto entry = tbc.entry(it);
+    auto bc = getValue<Array<std::string> >(entry);
+    auto ss_name = bc[0];
+    auto ss_idx = disc->get_side_set_idx(ss_name);
+    GOAL_ALWAYS_ASSERT(! traction_map.count(ss_idx));
+    traction_map[ss_idx] = bc;
+  }
 }
 
 template <typename T>

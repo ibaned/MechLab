@@ -56,6 +56,7 @@ class Mechanics : public goal::Physics {
 
     void build_fields();
     void build_states();
+    void build_tractions();
 
     void build_primal_volumetric(FieldManager fm);
     void build_primal_neumann(FieldManager fm);
@@ -84,6 +85,8 @@ class Mechanics : public goal::Physics {
 
     std::string model;
     goal::States* states;
+
+    std::map<int, Teuchos::Array<std::string> > traction_map;
 };
 
 /// @brief Create a mechanics physics object.
