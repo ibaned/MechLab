@@ -7,8 +7,8 @@ debug example:
     reorder mesh: true
     workset size: 1000
   mechanics:
-    p order: 1
-    q degree: 1
+    p order: 3
+    q degree: 4
     model: elastic
     box:
       E: 1000.0
@@ -23,4 +23,5 @@ debug example:
     krylov size: 200
     tolerance: 1.0e-10
   output:
-    out file: out_static_elast_p1_2D_4p
+    out file: out_static_elast_p3_2D
+    interpolate: [ux, uy]

@@ -6,9 +6,10 @@ debug example:
     assoc file: box3D.txt
     reorder mesh: true
     workset size: 1000
+    make quadratic: true
   mechanics:
-    p order: 3
-    q degree: 4
+    p order: 2
+    q degree: 2
     model: elastic
     box:
       E: 1000.0
@@ -24,5 +25,4 @@ debug example:
     krylov size: 200
     tolerance: 1.0e-10
   output:
-    out file: out_static_elast_p3_3D_4p
-    interpolate: [ux, uy, uz]
+    out file: out_static_elast_p2_3D

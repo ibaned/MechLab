@@ -24,4 +24,4 @@ debug example:
     krylov size: 200
     tolerance: 1.0e-10
   output:
-    out file: out_static_elast_p1_3D_4p
+    out file: out_static_elast_p1_3D
