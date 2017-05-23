@@ -1,0 +1,28 @@
+debug example:
+  solver type: static
+  discretization:
+    geom file: box2D.dmg
+    mesh file: box2D_4p.smb
+    assoc file: box2D.txt
+    reorder mesh: true
+    workset size: 1000
+    make quadratic: true
+  mechanics:
+    p order: 2
+    q degree: 2
+    model: elastic
+    box:
+      E: 1000.0
+      nu: 0.25
+    dirichlet bcs:
+      bc 1: [ux, xmin, 0.0]
+      bc 2: [uy, ymin, 0.0]
+    traction bcs:
+      bc 1: [xmax, 1.0, 0.0]
+  linear algebra:
+    method: CG
+    maximum iterations: 200
+    krylov size: 200
+    tolerance: 1.0e-10
+  output:
+    out file: out_static_elast_p2_traction_2D
