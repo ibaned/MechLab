@@ -2,6 +2,7 @@
 #include <goal_ev_basis.hpp>
 
 #include "ml_mechanics.hpp"
+#include "ml_ev_traction.hpp"
 
 using Teuchos::rcp;
 using goal::Traits;
@@ -29,6 +30,10 @@ void ml::Mechanics::register_neumann(goal::FieldManager fm) {
 
   // compute tractions if needed for this side set
   if (traction_map.count(side_set)) {
+    auto bc = traction_map[side_set];
+    auto ev = rcp(new ml::Traction<EvalT, Traits>(disp, bc, indexer, type));
+    fm->registerEvaluator<EvalT>(ev);
+    fm->requireField<EvalT>(*ev->evaluatedFields()[0]);
   }
 
   // set the FAD data and finalize the PHX field maanger registration.
