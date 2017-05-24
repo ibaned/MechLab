@@ -15,6 +15,8 @@ namespace ml {
 static ParameterList get_valid_params() {
   ParameterList p;
   p.set<std::string>("solver type", "");
+  p.set<int>("nonlinear max iters", 0);
+  p.set<double>("nonlinear tolerance", 0.0);
   p.sublist("discretization");
   p.sublist("mechanics");
   p.sublist("output");
@@ -68,6 +70,37 @@ void StaticSolver::solve_linear_primal() {
 }
 
 void StaticSolver::solve_nonlinear_primal() {
+
+  // get useful parameters
+  auto indexer = mech->get_indexer();
+  auto lp = params.sublist("linear algebra");
+  auto max = params.get<int>("nonlinear max iters");
+  auto tol = params.get<double>("nonlinear tolerance");
+  auto R = info->owned->R;
+  auto du = info->owned->du;
+  auto dRdu = info->owned->dRdu;
+
+  // solve with newton's method
+  int iter = 1;
+  bool converged = false;
+  while ((iter <= max) && (! converged)) {
+    goal::print(" > (%d) newton iteration", iter);
+    goal::compute_primal_jacobian(mech, info, disc, 0, 0);
+    R->scale(-1.0);
+    du->putScalar(0.0);
+    goal::solve_linear_system(lp, dRdu, du, R);
+    indexer->add_to_fields(mech->get_u(), du);
+    goal::compute_primal_residual(mech, info, disc, 0, 0);
+    double norm = R->norm2();
+    goal::print(" > ||R|| = %e", norm);
+    if (norm < tol)
+      converged = true;
+    iter++;
+  }
+
+  // die if no convergence
+  if ((iter > max) && (! converged))
+    goal::fail("newton's method failed in %d iterations", max);
 }
 
 void StaticSolver::solve_primal() {
@@ -81,7 +114,7 @@ void StaticSolver::solve_primal() {
 
   // solve the linear algebra problem
   if (is_linear) solve_linear_primal();
-  else solve_nonlinear_primal();
+  solve_nonlinear_primal();
 
   // finalize the primal data
   goal::destroy_sol_info(info);
