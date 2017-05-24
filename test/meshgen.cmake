@@ -1,5 +1,5 @@
 function(find_scorec_exe exename)
-  find_program(${exename}_exe ${exename} HINTS "${SCOREC_DIR}")
+  find_program(${exename}_exe ${exename} HINTS "${SCOREC_DIR}/../../../bin")
   if(NOT EXISTS "${${exename}_exe}")
     message(FATAL_ERROR "scorec utility: ${exename} not found")
   endif()
