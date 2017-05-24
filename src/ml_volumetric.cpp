@@ -7,6 +7,7 @@
 #include "ml_mechanics.hpp"
 #include "ml_ev_kinematics.hpp"
 #include "ml_ev_elastic.hpp"
+#include "ml_ev_J2.hpp"
 #include "ml_ev_first_pk.hpp"
 #include "ml_ev_momentum_resid.hpp"
 
@@ -58,6 +59,8 @@ void ml::Mechanics::register_volumetric(goal::FieldManager fm) {
     RCP<PHX::Evaluator<Traits> > ev;
     if (model == "elastic")
       ev = rcp(new ml::Elastic<EvalT, Traits>(disp, states, mp, type));
+    else if (model == "J2")
+      ev = rcp(new ml::J2<EvalT, Traits>(disp, states, mp, type));
     fm->registerEvaluator<EvalT>(ev);
   }
 
